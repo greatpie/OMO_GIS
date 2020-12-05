@@ -1,7 +1,7 @@
 <!--
  * @Author: greatpie
  * @Date: 2020-11-21 02:38:28
- * @LastEditTime: 2020-12-06 05:58:54
+ * @LastEditTime: 2020-12-06 06:03:27
  * @LastEditors: greatpie
  * @FilePath: /OMO_GIS/README.md
 -->
@@ -9,7 +9,15 @@
 可用于Web GL的虚实融合系统。
 
 
+## Start
+
 Preview:[https://omo-gis.netlify.app](https://omo-gis.netlify.app)
+
+### Manual Installation
+ ```bash
+ yarn
+ yarn build
+ ```
 
 ## Finished
 - 平面叠放及video贴图
