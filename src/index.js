@@ -1,14 +1,14 @@
 /*
  * @Author: greatpie
  * @Date: 2020-11-21 02:50:58
- * @LastEditTime: 2020-12-04 19:24:07
+ * @LastEditTime: 2020-12-06 04:28:05
  * @LastEditors: greatpie
  * @FilePath: /OMO_GIS/src/index.js
  */
 import * as THREE from 'three'
+import { AxesHelper } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
-
 
 function main() {
   const canvas = document.querySelector('#c')
@@ -28,13 +28,18 @@ function main() {
   const scene = new THREE.Scene()
   scene.background = new THREE.Color('grey')
 
+  // add grid helper
+  const size = 10
+  const divisions = 10
+
+  const gridHelper = new THREE.GridHelper(size, divisions)
+  scene.add(gridHelper)
+
   {
     const planeSize = 40
 
     const loader = new THREE.TextureLoader()
-    const texture = loader.load(
-      './assets/images/checker.png'
-    )
+    const texture = loader.load('./assets/images/checker.png')
     texture.wrapS = THREE.RepeatWrapping
     texture.wrapT = THREE.RepeatWrapping
     texture.magFilter = THREE.NearestFilter
@@ -118,6 +123,21 @@ function main() {
         controls.update()
       }
     )
+  }
+
+  // create a plane geometrey with video texture
+  {
+    const video = document.createElement('video')
+    video.src = './assets/videos/cctv_demo.mp4'
+    video.autoplay = 'autoplay'
+
+    const planeTexture = new THREE.VideoTexture(video)
+    const PlaneGeometry = new THREE.PlaneGeometry(600, 200)
+    const planeMaterial = new THREE.MeshPhongMaterial({
+      map: planeTexture,
+    })
+    const planeMesh = new THREE.Mesh(PlaneGeometry, planeMaterial)
+    scene.add(planeMesh)
   }
 
   function resizeRendererToDisplaySize(renderer) {
