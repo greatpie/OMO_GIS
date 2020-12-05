@@ -1,12 +1,12 @@
 /*
  * @Author: greatpie
  * @Date: 2020-11-21 02:50:58
- * @LastEditTime: 2020-12-06 04:28:05
+ * @LastEditTime: 2020-12-06 05:45:05
  * @LastEditors: greatpie
  * @FilePath: /OMO_GIS/src/index.js
  */
 import * as THREE from 'three'
-import { AxesHelper } from 'three'
+import { AxesHelper, BufferAttribute } from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
@@ -28,12 +28,9 @@ function main() {
   const scene = new THREE.Scene()
   scene.background = new THREE.Color('grey')
 
-  // add grid helper
-  const size = 10
-  const divisions = 10
-
-  const gridHelper = new THREE.GridHelper(size, divisions)
-  scene.add(gridHelper)
+  // add  helper
+  const axesHelper = new THREE.AxesHelper(1000)
+  scene.add(axesHelper)
 
   {
     const planeSize = 40
@@ -132,12 +129,32 @@ function main() {
     video.autoplay = 'autoplay'
 
     const planeTexture = new THREE.VideoTexture(video)
-    const PlaneGeometry = new THREE.PlaneGeometry(600, 200)
+    
     const planeMaterial = new THREE.MeshPhongMaterial({
       map: planeTexture,
     })
-    const planeMesh = new THREE.Mesh(PlaneGeometry, planeMaterial)
+    const planeGeometry = new THREE.PlaneGeometry(1000, 250)
+    planeGeometry.rotateX(-Math.PI/2)
+    planeGeometry.translate(0,-100,520)
+    const planeMesh = new THREE.Mesh(planeGeometry, planeMaterial)
     scene.add(planeMesh)
+
+    // const tempGeometry = new THREE.BufferGeometry()
+    
+    // const vertices = new Float32Array([
+    //   -450,0,500,
+    //   -450,0,700,
+    //   450,0,700,
+    //   450,0,500
+    // ])
+    // const indexs = new Uint16Array([
+    //   0,1,2,
+    //   0,2,3
+    // ])
+    // tempGeometry.setAttribute('position', new THREE.BufferAttribute(vertices,3))
+    // tempGeometry.index = new BufferAttribute(indexs,1)
+    // const tempMesh = new THREE.Mesh(tempGeometry,planeMaterial)
+    // scene.add(tempMesh)
   }
 
   function resizeRendererToDisplaySize(renderer) {
